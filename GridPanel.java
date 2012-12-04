@@ -8,7 +8,7 @@ import javax.swing.JPanel;
 
 public class GridPanel extends JPanel{
 	private int blockSize = 5; //pixel width and height
-	private int gridWidth = 200; //width in blocks
+	private int gridWidth = 100; //width in blocks
 	private int gridHeight = 150; //height in blocks
 	private int componentWidth = gridWidth * blockSize; //width of JPanel in pixels
 	private int componentHeight = gridHeight * blockSize; //height of JPanel in pixels
@@ -25,7 +25,7 @@ public class GridPanel extends JPanel{
 	public void paintComponent(Graphics g){
 		
 		g.setColor(Color.black);
-		
+		/*
 		//draw vertical lines
 		for(int i = 0; i < componentWidth; i += blockSize){
 			g.drawLine(i, 0, i, componentHeight);
@@ -35,7 +35,7 @@ public class GridPanel extends JPanel{
 		for(int i = 0; i < componentHeight; i += blockSize){
 			g.drawLine(0, i, componentWidth, i);
 		}
-		
+		*/
 		//fill in the first row
 		for(int i = 0; i < gridWidth; i++){
 			if(initialRow[i] == 1){
@@ -45,14 +45,14 @@ public class GridPanel extends JPanel{
 		
 		
 		//fill in the rest of the grid
-		int[] nextRow = Rules.rule126(initialRow);
+		int[] nextRow = Rules.rule3(initialRow);
 		for(int i = 1; i < gridHeight; i++){
 			for(int j = 0; j < gridWidth; j++){
 				if(nextRow[j] == 1){
 					g.fillRect(j * blockSize, i * blockSize, blockSize, blockSize);
 				}
 			}
-			nextRow = Rules.rule126(nextRow);
+			nextRow = Rules.rule3(nextRow);
 		}
 	}
 	

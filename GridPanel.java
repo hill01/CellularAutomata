@@ -7,14 +7,14 @@ import javax.swing.JPanel;
 
 
 public class GridPanel extends JPanel{
-	private int blockSize = 3; //pixel width and height
-	private int gridWidth = 250; //width in blocks
-	private int gridHeight = 220; //height in blocks
-	private int componentWidth = gridWidth * blockSize; //width of JPanel in pixels
-	private int componentHeight = gridHeight * blockSize; //height of JPanel in pixels
+	private static int blockSize = 3; //pixel width and height
+	private static int gridWidth = 250; //width in blocks
+	private static int gridHeight = 220; //height in blocks
+	private static int componentWidth = gridWidth * blockSize; //width of JPanel in pixels
+	private static int componentHeight = gridHeight * blockSize; //height of JPanel in pixels
 	
-	public int ruleNumber = 11;	
-	public int[] initialRow = new int[gridWidth];
+	public static int ruleNumber = 150;	
+	public static int[] initialRow = new int[gridWidth];
 	
 	public GridPanel(){
 		super();
@@ -25,6 +25,8 @@ public class GridPanel extends JPanel{
 	}
 	
 	public void paintComponent(Graphics g){
+		g.setColor(Color.white);
+		g.fillRect(0, 0, componentWidth, componentHeight);
 		g.setColor(Color.black);
 		
 		//fill in the first row
@@ -35,15 +37,21 @@ public class GridPanel extends JPanel{
 		}		
 		
 		//fill in the rest of the grid
-		int[] nextRow = Rules.anyRule(ruleNumber, initialRow);
+		int[] nextRow = Rules.getRule(ruleNumber, initialRow);
 		for(int i = 1; i < gridHeight; i++){
 			for(int j = 0; j < gridWidth; j++){
 				if(nextRow[j] == 1){
 					g.fillRect(j * blockSize, i * blockSize, blockSize, blockSize);
 				}
 			}
-			nextRow = Rules.anyRule(ruleNumber, nextRow);
+			nextRow = Rules.getRule(ruleNumber, nextRow);
 		}
+	}
+	
+	public void setRuleNumber(int n){
+		ruleNumber = n;
+		randomizeInitialRow();
+		repaint();
 	}
 	
 	private void randomizeInitialRow(){
